@@ -1,4 +1,10 @@
-export function App() {
-  return <h1 className="">O Rei das entregas!</h1>;
-}
+import { Button } from "./components/ui/button";
+import "./global.css";
 
+export function App() {
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <Button>Enviar</Button>
+    </div>
+  );
+}
