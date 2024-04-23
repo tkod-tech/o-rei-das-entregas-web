@@ -4,13 +4,13 @@ import {Bike} from "lucide-react";
 export function AuthLayout() {
   return (
     <div className="min-h-screen grid grid-cols-2">
-      <div className="flex h-full flex-col justify-between border-r border-foreground/5 bg-muted p-10 text-muted-foreground">
+      <div className="flex h-full flex-col justify-between border-r border-foreground/5 bg-[url('/img/containerLogo.svg')] bg-cover bg-no-repeat bg-center h-64 w-full p-10 text-muted-foreground">
         <div className="flex items-center gap-3 text-lg font-medium">
-            <Bike />
-            <span className="font-semibold">o rei das entregas</span>
+            <Bike color="#fff"/>
+            <span className="font-semibold text-white">O Rei das Entregas.</span>
         </div>
-        <footer className="text-sm">
-          Painel do parceiro &copy, o rei das entregas -{" "}
+        <footer className="text-sm text-white">
+          Painel do parceiro &copy; O Rei das Entregas -{" "}
           {new Date().getFullYear()}
         </footer>
       </div>

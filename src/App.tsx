@@ -7,7 +7,7 @@ export function App() {
   return (
     <HelmetProvider>
       <Helmet titleTemplate="%s | REI"/>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </HelmetProvider>
   )
 }
