@@ -12,7 +12,7 @@ export function App() {
       <Helmet titleTemplate="%s | REI" />
       <Toaster />
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />;
+        <RouterProvider router={router} />
       </QueryClientProvider>
     </HelmetProvider>
   );

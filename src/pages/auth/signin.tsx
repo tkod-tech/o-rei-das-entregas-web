@@ -29,7 +29,7 @@ export function Signin() {
 
   async function handleSignIn(data: SignInForm) {
     try {
-      var response = await authenticate({ email: data.email, password: data.password });
+      const response = await authenticate({ email: data.email, password: data.password });
       console.log(response);
       toast.success(`Login efetuado, bem vindo ${data.email}`);
     } catch (error) {

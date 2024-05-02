@@ -4,7 +4,7 @@ export function Dashboard() {
   return (
     <>
       <Helmet title="Dashboard" />
-      <h1>Consumindo uma API com axios</h1>
+      <h1>Dashboard</h1>
     </>
   );
 }
