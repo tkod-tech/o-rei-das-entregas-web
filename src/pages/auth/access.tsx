@@ -19,7 +19,7 @@ export function Access() {
 
   return (
     <>
-      <Helmet title="Acesso" />
+      <Helmet title="Criar Acesso" />
       <div className="p-8">
         <div className="flex w-[350px] flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">

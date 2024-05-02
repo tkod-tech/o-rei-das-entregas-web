@@ -21,7 +21,7 @@ export function StoreRegister() {
 
   return (
     <>
-      <Helmet title="Criar Usuário" />
+      <Helmet title="Informações Loja" />
       <div className="p-8">
         <div className="flex w-[650px] flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">

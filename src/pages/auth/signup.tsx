@@ -4,9 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Helmet } from "react-helmet-async";
 
+
 import ProgressIndicator from "@/components/ProgressIndicator";
 
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Signup() {
   const navigate = useNavigate();
@@ -32,7 +33,6 @@ export function Signup() {
           <div className="flex items-center justify-center">
             <ProgressIndicator currentStep={0}/>
           </div>
-
 
           <form className="space-y-4">
             <div className="space-y-2">
@@ -67,7 +67,7 @@ export function Signup() {
                 Aceitar termos e condições
               </label>
             </div>
-              <p>Já possui um conta? <a className="text-red-600" href="/auth/sign-in">Faça Log in</a></p>
+              <p>Já possui um conta? <Link className="text-red-600" to="/auth/sign-in">Faça Log in</Link></p>
 
           </form>
         </div>

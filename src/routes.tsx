@@ -6,6 +6,8 @@ import { StoreRegister } from "./pages/auth/storeRegister";
 import { AppLayout } from "./pages/_layouts/app";
 import { AuthLayout } from "./pages/_layouts/auth";
 import { Access } from "./pages/auth/access";
+import { Home } from "./pages/Home";
+
 
 export const router = createBrowserRouter([
   {
@@ -35,5 +37,11 @@ export const router = createBrowserRouter([
     path: "/",
     element: <AuthLayout />,
     children: [{ path: "/auth/access", element: <Access /> }],
+  },
+
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [{ path: "/home", element: <Home /> }],
   },
 ]);
