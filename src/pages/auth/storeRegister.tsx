@@ -1,14 +1,26 @@
+import { useEffect, useState } from "react";
 import ProgressIndicator from "@/components/ProgressIndicator";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
 import { Label } from "@radix-ui/react-label";
 import { Helmet } from "react-helmet-async";
-import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 import { CircleAlert } from "lucide-react"
 
-import { useNavigate } from "react-router-dom";
-
 export function StoreRegister() {
+  const [cnpj, setCnpj] = useState('');
+  const [nameStore, setNameStore] = useState('');
+  const [address, setAddress] = useState('');
+  const [cep, setCep] = useState('');
+  const [telephone, setTelephone] = useState('');
+  const [formValid, setFormValid] = useState(false);
+
+  useEffect(() => {
+    setFormValid(cnpj.trim() !== '' && nameStore.trim() !== '' && address.trim() !== '' && cep.trim() !== '' && telephone.trim() !== '')
+  },[cnpj, nameStore, address, cep, telephone]);
+
   const navigate = useNavigate()
 
   const handleBack = () => {
@@ -38,7 +50,7 @@ export function StoreRegister() {
           </div>
 
           <form className="space-y-2">
-              <div className="border-b border-gray-900/10 pb-12">
+              <div >
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
                     <Label htmlFor="cnpj" className="flex items-center">
@@ -51,6 +63,7 @@ export function StoreRegister() {
                         type="text" //Possibilidade de começar com 00. 
                         placeholder="Ex: 00.000.000/00"
                         required
+                        onChange={(e) => setCnpj(e.target.value)}
                       />
                     </div>
                   </div>
@@ -64,6 +77,7 @@ export function StoreRegister() {
                         id="nameStore"
                         type="text"
                         placeholder="Ex: nome do seu estabelecimento"
+                        onChange={(e) => setNameStore(e.target.value)}
                       />
                     </div>
                   </div>
@@ -78,6 +92,7 @@ export function StoreRegister() {
                       type="text"
                       placeholder="Ex: Av. Principal, 210 - Fátima, Fortaleza- CE"
                       required
+                      onChange={(e) => setAddress(e.target.value)}
                     />
                     </div>
                   </div>
@@ -101,9 +116,10 @@ export function StoreRegister() {
                     </Label>
                     <div className="mt-2">
                     <Input
-                      id="complement"
+                      id="cep"
                       type="number"
                       placeholder="Ex: 00000-000"
+                      onChange={(e) => setCep(e.target.value)}
                     />
                   </div>
                   </div>
@@ -118,6 +134,7 @@ export function StoreRegister() {
                       type="number"
                       placeholder="Ex: (555) 99191-9292"
                       required
+                      onChange={(e) => setTelephone(e.target.value)}
                     />
                     </div>
                   </div>
@@ -132,6 +149,7 @@ export function StoreRegister() {
                 <Button 
                   type="submit"
                   onClick={handleContinueAccess}
+                  disabled={!formValid}
                 >
                   Continuar
                 </Button>
