@@ -8,6 +8,7 @@ import { Terms } from "@/components/terms";
 
 import { Label } from "@radix-ui/react-label";
 import { Helmet } from "react-helmet-async";
+import InputMask from "react-input-mask"
 
 export function Signup() {
   const [name, setName] = useState('');
@@ -64,12 +65,18 @@ export function Signup() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="number">Telefone</Label>
-                <Input 
-                  id="number" 
-                  type="number" 
-                  placeholder="Ex: (555) 99191-9292" 
+                <InputMask
+                  mask="(99) 99999-9999"
+                  value={number}
                   onChange={(e) => setNumber(e.target.value)}
+                >
+                  <Input
+                    id="telephone"
+                    type="tel"
+                    placeholder="Ex: (55) 99191-9292"
+                    required
                   />
+                </InputMask>
               </div>
               <Button
                 className="w-full"
