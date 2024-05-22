@@ -5,8 +5,23 @@ import { Helmet } from "react-helmet-async";
 
 import { useNavigate } from "react-router-dom";
 import ProgressIndicator from "@/components/ProgressIndicator";
+import { useEffect, useState } from "react";
 
 export function Access() {
+  const [formValid, setFormValid] = useState(false);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [passwordMatch, setPasswordMatch] = useState(true)
+
+  useEffect(() => {
+    setFormValid( email.trim() !== '' && password.trim() !== '' && passwordConfirm.trim() !== '')
+  },[email, password, passwordConfirm])
+  
+  useEffect(() => {
+    setPasswordMatch( password === passwordConfirm)
+  },[password, passwordConfirm])
+
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -14,7 +29,9 @@ export function Access() {
   };
 
   const handleContinueLogin = () => {
-    navigate('/auth/sign-in');
+    if(passwordMatch) {
+      navigate('/auth/sign-in');
+    }
   };
 
   return (
@@ -42,15 +59,31 @@ export function Access() {
                 id="email"
                 type="email"
                 placeholder="example@email.com.br"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Sua senha</Label>
-              <Input id="password" type="password" placeholder="********" required/>
+              <Input 
+                id="password" 
+                type="password" 
+                placeholder="********" 
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                />
             </div>
             <div className="space-y-2">
               <Label htmlFor="passwordConfirm">Confirme sua senha</Label>
-              <Input id="passwordConfirm" type="password" placeholder="********" required/>
+              <Input 
+                id="passwordConfirm" 
+                type="password" 
+                placeholder="********" 
+                required
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+                />
+                {!passwordMatch && (
+                  <span className="text-sm text-primary">As senhas não conferem. Por favor, verifique.</span>
+                )}
             </div>
             <div className="flex justify-between justify-items-end mt-6">
               <Button 
@@ -62,6 +95,7 @@ export function Access() {
               <Button 
                 type="submit"
                 onClick={handleContinueLogin}
+                disabled={!formValid || !passwordMatch}
               >
                 Finalizar
               </Button>
