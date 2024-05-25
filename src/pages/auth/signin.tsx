@@ -8,6 +8,7 @@ import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "@/api/sign-in";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const signInForm = z.object({
   email: z.string().email(),
@@ -17,6 +18,8 @@ const signInForm = z.object({
 type SignInForm = z.infer<typeof signInForm>;
 
 export function Signin() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -29,12 +32,12 @@ export function Signin() {
 
   async function handleSignIn(data: SignInForm) {
     try {
-      const response = await authenticate({ email: data.email, password: data.password });
-      console.log(response);
+      const response =await authenticate({ email: data.email, password: data.password });
+      navigate("/");
       toast.success(`Login efetuado, bem vindo ${data.email}`);
     } catch (error) {
       toast.error("Falha na validação");
-    }
+    } 
   }
   
   return (
