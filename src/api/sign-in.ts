@@ -13,6 +13,7 @@ export async function signIn({ email, password }: SignInBody) {
     });
     const authorizationHeader = response.headers["authorization"];
 
+    localStorage.setItem("userId", response.data.data.id);
     localStorage.setItem("authorizationToken", authorizationHeader);
 
     return response.data;

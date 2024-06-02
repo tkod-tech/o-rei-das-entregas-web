@@ -29,7 +29,7 @@ export function MenuSidebar() {
             </div>
           </Link>
           {/* <Link className={getLinkClass('/delivery')} to='/delivery'>Entregas</Link> */}
-          <Link className={getLinkClass('/minha-conta')} to='/minha-conta'>
+          <Link className={getLinkClass('/Profile')} to='/profile'>
             <div className="flex items-center">
               <LucideUser className="mr-2 h-4 w-4" />
               Minha Conta

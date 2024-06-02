@@ -1,24 +1,35 @@
-import { Building, LogOut, User } from 'lucide-react'
+import { Building, LogOut, User as UserIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
-import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu'
+} from "./ui/dropdown-menu";
+import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
+import { useUser } from "@/context/UserContext";
 
 export function AccountMenu() {
+  const { user, loading } = useUser();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div>No user data</div>;
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <User className="w-10 h-10 dark:text-white hover:bg-muted border rounded-full p-2" />
+        <UserIcon className="w-10 h-10 dark:text-white hover:bg-muted border rounded-full p-2" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">
-          <span>Lucas Freire</span>
+          <span>{user.name}</span>
           <span className="text-xs font-normal text-muted-foreground">
-            lucasfreirel.dev@gmail.com
+            {user.email}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-muted w-full h-0.5" />
@@ -33,5 +44,5 @@ export function AccountMenu() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
