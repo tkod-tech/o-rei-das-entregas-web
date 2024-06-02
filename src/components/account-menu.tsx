@@ -14,25 +14,18 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export function AccountMenu() {
-  const { user, loading } = useUser();
+  const { user } = useUser();
   const navigate = useNavigate();
   const { mutateAsync: logout } = useMutation({
     mutationFn: signOut,
   });
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return <div>No user data</div>;
-  }
 
   async function handleSignOut() {
     try {
       await logout();
       localStorage.removeItem("authorizationToken");
       localStorage.removeItem("userId");
+
       navigate("/auth/sign-in");
     } catch (error) {
       toast.error("Falha na validação");
@@ -46,9 +39,9 @@ export function AccountMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">
-          <span>{user.name}</span>
+          <span>{user?.name}</span>
           <span className="text-xs font-normal text-muted-foreground">
-            {user.email}
+            {user?.email}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-muted w-full h-0.5" />

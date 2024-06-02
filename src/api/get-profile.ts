@@ -24,7 +24,7 @@ interface GetProfileResponse {
 
 export async function getProfile() {
     try {
-        const id = localStorage.getItem("userId");
+        const id = await localStorage.getItem("userId");
         const response = await api.get(`/api/users/${id}`);
         const data = response.data;
         const transformedData: GetProfileResponse = {

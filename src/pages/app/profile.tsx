@@ -1,4 +1,5 @@
 import { getProfile } from "@/api/get-profile";
+import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 
