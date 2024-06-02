@@ -48,7 +48,6 @@ export async function getProfile() {
             createdAt: data.created_at,
             updatedAt: data.updated_at,
         };
-        console.log(transformedData);
         return transformedData;
     } catch (error) {
         throw error;

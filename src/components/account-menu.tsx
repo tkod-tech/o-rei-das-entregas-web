@@ -8,9 +8,17 @@ import {
 } from "./ui/dropdown-menu";
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 import { useUser } from "@/context/UserContext";
+import { signOut } from "@/api/sign-out";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export function AccountMenu() {
   const { user, loading } = useUser();
+  const navigate = useNavigate();
+  const { mutateAsync: logout } = useMutation({
+    mutationFn: signOut,
+  });
 
   if (loading) {
     return <div>Loading...</div>;
@@ -18,6 +26,17 @@ export function AccountMenu() {
 
   if (!user) {
     return <div>No user data</div>;
+  }
+
+  async function handleSignOut() {
+    try {
+      await logout();
+      localStorage.removeItem("authorizationToken");
+      localStorage.removeItem("userId");
+      navigate("/auth/sign-in");
+    } catch (error) {
+      toast.error("Falha na validação");
+    }
   }
 
   return (
@@ -38,7 +57,10 @@ export function AccountMenu() {
           <span> Perfil da loja </span>
         </DropdownMenuItem>
 
-        <DropdownMenuItem className="text-rose-500 dark:text-rose-400">
+        <DropdownMenuItem
+          className="text-rose-500 dark:text-rose-400"
+          onClick={handleSignOut}
+        >
           <LogOut className="mr-2 h-4 w-4" />
           <span> Sair </span>
         </DropdownMenuItem>
