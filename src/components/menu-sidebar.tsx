@@ -1,4 +1,4 @@
-import { LogOut, HomeIcon, LucideWorkflow } from 'lucide-react';
+import { LogOut, HomeIcon, LucideWorkflow, LucideUser } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 export function MenuSidebar() {
   const location = useLocation();
@@ -29,7 +29,12 @@ export function MenuSidebar() {
             </div>
           </Link>
           {/* <Link className={getLinkClass('/delivery')} to='/delivery'>Entregas</Link> */}
-          {/* <Link className={getLinkClass('/minha-conta')} to='/minha-conta'>Minha conta</Link> */}
+          <Link className={getLinkClass('/minha-conta')} to='/minha-conta'>
+            <div className="flex items-center">
+              <LucideUser className="mr-2 h-4 w-4" />
+              Minha Conta
+            </div>
+          </Link>
         </div>
       </div>
     </div>
