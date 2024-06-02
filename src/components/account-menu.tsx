@@ -52,7 +52,7 @@ export function AccountMenu() {
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-muted w-full h-0.5" />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/profile")}>
           <Building className="mr-2 h-4 w-4" />
           <span> Perfil da loja </span>
         </DropdownMenuItem>
