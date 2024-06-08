@@ -7,7 +7,7 @@ import { AppLayout } from "./pages/_layouts/app";
 import { AuthLayout } from "./pages/_layouts/auth";
 import { Access } from "./pages/auth/access";
 import { Home } from "./pages/app/home";
-import { Vacanaices } from "./pages/app/vacanaices";
+import { Vacanaices } from "./pages/app/vacancies";
 import { Delivery } from "./pages/app/delivery";
 import { Profile } from "./pages/app/profile";
 

@@ -10,7 +10,16 @@ import InputMask from "react-input-mask"
 
 import { CircleAlert } from "lucide-react"
 
-export function StoreRegister() {
+import { useForm } from "react-hook-form";
+
+import { FormData } from "@/SignupState";
+
+interface StepProps {
+  data: FormData;
+  onNext: (data: Partial<FormData>) => void;
+}
+
+export function StoreRegister({ onNext, data}: StepProps) {
   const [cnpj, setCnpj] = useState('');
   const [nameStore, setNameStore] = useState(''); 
   const [address, setAddress] = useState('');
@@ -19,6 +28,22 @@ export function StoreRegister() {
   const [cep, setCep] = useState('');
   const [telephone, setTelephone] = useState('');
   const [formValid, setFormValid] = useState(false);
+
+  const { register, handleSubmit, formState: { isSubmitting }, watch } = useForm({
+    defaultValues: data,
+  });
+
+  const watchAllFields = watch();
+
+  useEffect(() => {
+    const { cnpj, nameStore, address, addressNumber, neighborhood, cep, telephone } = watchAllFields;
+    setFormValid(!!(cnpj && nameStore && address && addressNumber && neighborhood && cep && telephone));
+  }, [watchAllFields]);
+
+  const onSubmit = (formData: Partial<FormData>) => {
+    onNext(formData);
+
+  };
 
   useEffect(() => {
     setFormValid(cnpj.trim() !== '' && nameStore.trim() !== '' && address.trim() !== '' && addressNumber.trim() !== '' &&addressNeighborhood.trim() !== ''  && cep.trim() !== '' && telephone.trim() !== '')
@@ -30,9 +55,11 @@ export function StoreRegister() {
     navigate('/auth/sign-up');
   }
 
-  const handleContinueAccess = () => {
-    navigate('/auth/access')
-  }
+  // const handleContinueAccess = () => {
+  //   navigate('/auth/access')
+  // }
+
+
 
   return (
     <>
@@ -52,7 +79,7 @@ export function StoreRegister() {
             <ProgressIndicator currentStep={1}/>
           </div>
 
-          <form className="space-y-2">
+          <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
               <div >
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
@@ -68,6 +95,7 @@ export function StoreRegister() {
                         <Input
                           id="cnpj"
                           type="text" //Possibilidade de começar com 00. 
+                          {...register("cnpj")}
                           placeholder="Ex: 00.000.000/0000-00"
                           required
                         />
@@ -76,13 +104,14 @@ export function StoreRegister() {
                   </div>
 
                   <div className="sm:col-span-3">
-                    <Label htmlFor="nameStore" className="flex items-center">
-                      Nome da loja 
+                    <Label htmlFor="Storename" className="flex items-center">
+                      Nome da loja <CircleAlert className="mt-1 ml-1" color="#7C838A" size={12} />
                     </Label>
                     <div className="mt-2">
                     <Input
-                        id="nameStore"
+                        id="Storename"
                         type="text"
+                        {...register("nameStore")}
                         placeholder="Ex: Nome do seu estabelecimento"
                         onChange={(e) => setNameStore(e.target.value)}
                       />
@@ -96,6 +125,7 @@ export function StoreRegister() {
                       <Input
                         id="address"
                         type="text"
+                        {...register("address")}
                         placeholder="Ex: Av. Principal"
                         required
                         onChange={(e) => setAddress(e.target.value)}
@@ -111,6 +141,7 @@ export function StoreRegister() {
                       <Input
                         id="addressNumber"
                         type="number"
+                        {...register("addressNumber")}
                         placeholder="Ex: 1210"
                         required
                         onChange={(e) => setAddressNumber(e.target.value)}
@@ -126,6 +157,7 @@ export function StoreRegister() {
                       <Input
                         id="addressNeighborhood"
                         type="text"
+                        {...register("neighborhood")}
                         placeholder="Ex: Fátima"
                         required
                         onChange={(e) => setAddressNeighborhood(e.target.value)}
@@ -141,6 +173,7 @@ export function StoreRegister() {
                     <Input
                         id="complement"
                         type="text"
+                        {...register("complement")}
                         placeholder="Ex: Loja 02"
                       />
                     </div>
@@ -148,7 +181,7 @@ export function StoreRegister() {
 
                   <div className="sm:col-span-2">
                     <Label htmlFor="cep" className="flex items-center">
-                      CEP 
+                      CEP <CircleAlert className="mt-1 ml-1" color="#7C838A" size={12} />
                     </Label>
                     <div className="mt-2">
                       <InputMask 
@@ -159,6 +192,7 @@ export function StoreRegister() {
                         <Input
                           id="cep"
                           type="text"
+                          {...register("cep")}
                           placeholder="Ex: 00000-000"
                         />
                       </InputMask>
@@ -167,7 +201,7 @@ export function StoreRegister() {
 
                   <div className="sm:col-span-2">
                     <Label htmlFor="telephone" className="flex items-center">
-                      Telephone <CircleAlert className="mt-1 ml-1" color="#7C838A" size={12} />
+                      Telefone <CircleAlert className="mt-1 ml-1" color="#7C838A" size={12} />
                     </Label>
                     <div className="mt-2">
                       <InputMask
@@ -194,8 +228,8 @@ export function StoreRegister() {
                 </Button>
                 <Button 
                   type="submit"
-                  onClick={handleContinueAccess}
-                  disabled={!formValid}
+                  // onClick={handleContinueAccess}
+                  disabled={!formValid || isSubmitting}
                 >
                   Continuar
                 </Button>

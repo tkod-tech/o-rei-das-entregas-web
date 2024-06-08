@@ -80,7 +80,7 @@ export function Signin() {
             </Button>
             <p>
               Não possui conta?{" "}
-              <Link className="text-blue-600" to="/auth/sign-up">
+              <Link className="text-red-600" to="/auth/sign-up">
                 Criar conta
               </Link>
             </p>

@@ -32,7 +32,7 @@
   interface UserContextProps {
     user: User | null;
     loading: boolean;
-  }
+  } 
 
   const UserContext = createContext<UserContextProps | undefined>(undefined);
 
