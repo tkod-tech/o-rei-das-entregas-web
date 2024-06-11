@@ -1,42 +1,21 @@
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Helmet } from "react-helmet-async";
-
-import { useNavigate } from "react-router-dom";
 import ProgressIndicator from "@/components/ProgressIndicator";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 
-interface StepProps {
-  data: FormData;
-  onNext: (data: Partial<FormData>) => void;
-}
-
-import { FormData } from "@/SignupState";
-
-export function Access({onNext, data}:StepProps ) {
+export function Access( ) {
   const [formValid, setFormValid] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [passwordMatch, setPasswordMatch] = useState(true)
+  const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { isSubmitting }, watch } = useForm({
-    defaultValues: data,
-  });
-
-  const watchAllFields = watch();
-
-  useEffect(() => {
-    const { password, passwordConfirm } = watchAllFields;
-    setFormValid(!!(password && passwordConfirm && password === passwordConfirm));
-  }, [watchAllFields]);
-
-  const onSubmit = (formData: Partial<FormData>) => {
-    onNext(formData);
-  };
-
+  const onSubmit = () => {}
 
   useEffect(() => {
     setFormValid( email.trim() !== '' && password.trim() !== '' && passwordConfirm.trim() !== '')
@@ -46,17 +25,16 @@ export function Access({onNext, data}:StepProps ) {
     setPasswordMatch( password === passwordConfirm)
   },[password, passwordConfirm])
 
-  const navigate = useNavigate();
 
   const handleBack = () => {
     navigate('/auth/store-register');
   };
 
-  // const handleContinueLogin = () => {
-  //   if(passwordMatch) {
-  //     navigate('/auth/sign-in');
-  //   }
-  // };
+  const handleContinueLogin = () => {
+    if(passwordMatch) {
+      navigate('/auth/sign-in');
+    }
+  };
 
   return (
     <>
@@ -76,13 +54,12 @@ export function Access({onNext, data}:StepProps ) {
             <ProgressIndicator currentStep={2}/>
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          <form className="space-y-4" onSubmit={onSubmit}>
             <div className="space-y-2">
               <Label htmlFor="email">E-mail</Label>
               <Input
                 id="email"
                 type="email"
-                {...register("email")}
                 placeholder="example@email.com.br"
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -119,8 +96,8 @@ export function Access({onNext, data}:StepProps ) {
               </Button>
               <Button 
                 type="submit"
-                // onClick={handleContinueLogin}
-                disabled={!formValid || !passwordMatch || isSubmitting}
+                onClick={handleContinueLogin}
+                disabled={!formValid || !passwordMatch }
               >
                 Finalizar
               </Button>

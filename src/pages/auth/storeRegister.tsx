@@ -1,25 +1,17 @@
 import { useEffect, useState } from "react";
-import ProgressIndicator from "@/components/ProgressIndicator";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-import { Label } from "@radix-ui/react-label";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-import InputMask from "react-input-mask"
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import ProgressIndicator from "@/components/ProgressIndicator";
+
+import { InputMask } from '@react-input/mask';
+import MaskInput from "@/components/inputs/MaskInput";
 import { CircleAlert } from "lucide-react"
 
-import { useForm } from "react-hook-form";
-
-import { FormData } from "@/SignupState";
-
-interface StepProps {
-  data: FormData;
-  onNext: (data: Partial<FormData>) => void;
-}
-
-export function StoreRegister({ onNext, data}: StepProps) {
+export function StoreRegister() {
   const [cnpj, setCnpj] = useState('');
   const [nameStore, setNameStore] = useState(''); 
   const [address, setAddress] = useState('');
@@ -28,38 +20,21 @@ export function StoreRegister({ onNext, data}: StepProps) {
   const [cep, setCep] = useState('');
   const [telephone, setTelephone] = useState('');
   const [formValid, setFormValid] = useState(false);
-
-  const { register, handleSubmit, formState: { isSubmitting }, watch } = useForm({
-    defaultValues: data,
-  });
-
-  const watchAllFields = watch();
-
-  useEffect(() => {
-    const { cnpj, nameStore, address, addressNumber, neighborhood, cep, telephone } = watchAllFields;
-    setFormValid(!!(cnpj && nameStore && address && addressNumber && neighborhood && cep && telephone));
-  }, [watchAllFields]);
-
-  const onSubmit = (formData: Partial<FormData>) => {
-    onNext(formData);
-
-  };
+  const navigate = useNavigate()
 
   useEffect(() => {
     setFormValid(cnpj.trim() !== '' && nameStore.trim() !== '' && address.trim() !== '' && addressNumber.trim() !== '' &&addressNeighborhood.trim() !== ''  && cep.trim() !== '' && telephone.trim() !== '')
   },[cnpj, nameStore, address, cep, telephone, addressNumber, addressNeighborhood]);
 
-  const navigate = useNavigate()
-
   const handleBack = () => {
     navigate('/auth/sign-up');
   }
 
-  // const handleContinueAccess = () => {
-  //   navigate('/auth/access')
-  // }
+  const handleContinueAccess = () => {
+    navigate('/auth/access')
+  }
 
-
+  const onSubmit = () => {}
 
   return (
     <>
@@ -79,7 +54,7 @@ export function StoreRegister({ onNext, data}: StepProps) {
             <ProgressIndicator currentStep={1}/>
           </div>
 
-          <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
+          <form className="space-y-2" onSubmit={onSubmit}>
               <div >
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
@@ -89,16 +64,16 @@ export function StoreRegister({ onNext, data}: StepProps) {
                     </Label>
                     <div className="mt-2">
                       <InputMask
-                        mask="99.999.999/9999-99"
+                        component={MaskInput}
+                        mask="__.___.___/____-__"
+                        replacement="_"
+                        id="cnpj"
+                        value={cnpj}
+                        type="text" //Possibilidade de começar com 00. 
+                        placeholder="Ex: 00.000.000/0000-00"
+                        required
                         onChange={(e) => setCnpj(e.target.value)}
                       >
-                        <Input
-                          id="cnpj"
-                          type="text" //Possibilidade de começar com 00. 
-                          {...register("cnpj")}
-                          placeholder="Ex: 00.000.000/0000-00"
-                          required
-                        />
                       </InputMask>
                     </div>
                   </div>
@@ -111,7 +86,6 @@ export function StoreRegister({ onNext, data}: StepProps) {
                     <Input
                         id="Storename"
                         type="text"
-                        {...register("nameStore")}
                         placeholder="Ex: Nome do seu estabelecimento"
                         onChange={(e) => setNameStore(e.target.value)}
                       />
@@ -125,7 +99,6 @@ export function StoreRegister({ onNext, data}: StepProps) {
                       <Input
                         id="address"
                         type="text"
-                        {...register("address")}
                         placeholder="Ex: Av. Principal"
                         required
                         onChange={(e) => setAddress(e.target.value)}
@@ -141,7 +114,6 @@ export function StoreRegister({ onNext, data}: StepProps) {
                       <Input
                         id="addressNumber"
                         type="number"
-                        {...register("addressNumber")}
                         placeholder="Ex: 1210"
                         required
                         onChange={(e) => setAddressNumber(e.target.value)}
@@ -157,7 +129,6 @@ export function StoreRegister({ onNext, data}: StepProps) {
                       <Input
                         id="addressNeighborhood"
                         type="text"
-                        {...register("neighborhood")}
                         placeholder="Ex: Fátima"
                         required
                         onChange={(e) => setAddressNeighborhood(e.target.value)}
@@ -173,7 +144,6 @@ export function StoreRegister({ onNext, data}: StepProps) {
                     <Input
                         id="complement"
                         type="text"
-                        {...register("complement")}
                         placeholder="Ex: Loja 02"
                       />
                     </div>
@@ -185,18 +155,17 @@ export function StoreRegister({ onNext, data}: StepProps) {
                     </Label>
                     <div className="mt-2">
                       <InputMask 
-                        mask="99999-999"
+                        component={MaskInput}
+                        mask="____-___"
+                        replacement="_"
                         value={cep}
+                        id="cep"
+                        type="text"
+                        required
+                        placeholder="Ex: 00000-000"
                         onChange={(e) => setCep(e.target.value)}
-                      >
-                        <Input
-                          id="cep"
-                          type="text"
-                          {...register("cep")}
-                          placeholder="Ex: 00000-000"
-                        />
-                      </InputMask>
-                  </div>
+                    />
+                    </div>
                   </div>
 
                   <div className="sm:col-span-2">
@@ -205,17 +174,16 @@ export function StoreRegister({ onNext, data}: StepProps) {
                     </Label>
                     <div className="mt-2">
                       <InputMask
-                        mask="(99) 99999-9999"
-                        value={telephone}
-                        onChange={(e) => setTelephone(e.target.value)}
-                      >
-                        <Input
-                          id="telephone"
-                          type="tel"
-                          placeholder="Ex: (55) 99191-9292"
-                          required
-                        />
-                      </InputMask>
+                      component={MaskInput}
+                      mask="+55 (__) _____-____"
+                      replacement={{ _: /\d/ }} 
+                      id='phone' 
+                      placeholder='(85) 99292-9191' 
+                      required 
+                      type='tel'
+                      value={telephone}
+                      onChange={(e) => setTelephone(e.target.value)}
+                      />
                     </div>
                   </div>
               </div>
@@ -228,8 +196,8 @@ export function StoreRegister({ onNext, data}: StepProps) {
                 </Button>
                 <Button 
                   type="submit"
-                  // onClick={handleContinueAccess}
-                  disabled={!formValid || isSubmitting}
+                  onClick={handleContinueAccess}
+                  disabled={!formValid }
                 >
                   Continuar
                 </Button>

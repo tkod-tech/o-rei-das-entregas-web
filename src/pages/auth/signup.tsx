@@ -1,97 +1,34 @@
 import { useEffect, useState } from "react";
-import { Link,  } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import ProgressIndicator from "@/components/ProgressIndicator";
+import { Label } from "@/components/ui/label";
+
 import { Terms } from "@/components/terms";
+import ProgressIndicator from "@/components/ProgressIndicator";
 
-import { Label } from "@radix-ui/react-label";
-import { Helmet } from "react-helmet-async";
-import InputMask from "react-input-mask"
+import MaskInput from "@/components/inputs/MaskInput";
+import { InputMask } from '@react-input/mask';
 
-import { useForm } from "react-hook-form";
-
-// import { z } from "zod";
-// import { toast } from "sonner";
-// import { useForm } from "react-hook-form";
-// import { useMutation } from "@tanstack/react-query";
-// import { signUp } from "@/api/sing-up";
-
-import { FormData } from "@/SignupState";
-
-interface StepProps {
-  data: FormData;
-  onNext: (data: Partial<FormData>) => void;
-}
-
-export function Signup({ onNext, data }: StepProps) {
+export function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [checkboxChecked, setCheckboxChecked] = useState(false);
   const [formValid, setFormValid] = useState(false);
-
-  // const navigate = useNavigate();
-
-  const { register, handleSubmit, formState: { isSubmitting }, watch } = useForm({
-    defaultValues: data
-  });
-
-  // const signUpForm = z.object({
-  //   fullName: z.string(),
-  //   email: z.string().email(),
-  //   phone: z.string(),
-  // });
+  const navigate = useNavigate();
   
-  // type SignUpForm = z.infer<typeof signUpForm>;
-
-  // const handleContinueRegister = () => {
-  //   navigate('/auth/store-register');
-  // };
-
-  // const onSubmit = data => {
-  //   setUser(prev => ({ ...prev, ...data }));
-  //   navigate('/auth/store-register')
-  // }
-
-  const watchAllFields = watch();
-
-  useEffect(() => {
-    const { name, email, phone } = watchAllFields;
-    setFormValid(!!(name && email && phone));
-  }, [watchAllFields]);
-
-  const onSubmit = (formData: Partial<FormData>) => {
-    onNext(formData);
-    // navigate('/auth/store-register')
+  const handleContinueRegister = () => {
+    navigate('/auth/store-register');
   };
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { isSubmitting },
-  // } = useForm<SignUpForm>();
-
-  // const { mutateAsync: authenticate } = useMutation({
-  //   mutationFn: signUp,
-  // });
-  // async function handleSignUp(data: SignUpForm) {
-  //   try {
-  //     await authenticate({
-  //       fullName: data.fullName,
-  //       email: data.email,
-  //       phone: data.phone
-  //     });
-  //   } catch (error) {
-  //     toast.error("Falha na validação");
-  //   }
-  // }
-
 
   useEffect(() => {
     setFormValid(name.trim() !== '' && email.trim() !== '' && number.trim() !== '' && checkboxChecked);
   }, [name, email, number, checkboxChecked]);
+
+  const onSubmit = () => {}
 
   return (
     <>
@@ -111,12 +48,11 @@ export function Signup({ onNext, data }: StepProps) {
             <ProgressIndicator currentStep={0}/>
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          <form className="space-y-4" onSubmit={onSubmit}>
             <div className="space-y-2">
                 <Label htmlFor="name">Nome completo</Label>
                 <Input
                   id="name"
-                  {...register("name")}
                   type="text"
                   placeholder="Ex: John Silva Melo"
                   onChange={(e) => setName(e.target.value)}
@@ -126,7 +62,6 @@ export function Signup({ onNext, data }: StepProps) {
                 <Label htmlFor="email">E-mail</Label>
                 <Input 
                   id="email" 
-                  {...register("email")}
                   type="email" 
                   placeholder="Ex: johnsilvam@exemplo.com" 
                   onChange={(e) => setEmail(e.target.value)}
@@ -134,25 +69,23 @@ export function Signup({ onNext, data }: StepProps) {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="number">Telefone</Label>
-                <InputMask
-                  mask="(99) 99999-9999"
+                <InputMask 
+                  component={MaskInput}
+                  mask="+55 (__) _____-____"
+                  replacement={{ _: /\d/ }} 
                   value={number}
+                  id='phone' 
+                  placeholder='(85) 99292-9191' 
+                  required 
+                  type='tel'
                   onChange={(e) => setNumber(e.target.value)}
-                >
-                  <Input
-                    id="telephone"
-                    {...register("phone")}
-                    type="tel"
-                    placeholder="Ex: (55) 99191-9292"
-                    required
-                  />
-                </InputMask>
+                />
               </div>
               <Button
                 className="w-full"
                 type="submit"
-                // onClick={handleContinueRegister}
-                disabled={!formValid || isSubmitting}
+                onClick={handleContinueRegister}
+                disabled={!formValid}
               >
                 Avançar
               </Button>
