@@ -1,37 +1,63 @@
-import { Building, LogOut, User } from 'lucide-react'
+import { Building, LogOut, User as UserIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
-import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu'
+} from "./ui/dropdown-menu";
+import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
+import { useUser } from "@/context/UserContext";
+import { signOut } from "@/api/sign-out";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export function AccountMenu() {
+  const { user } = useUser();
+  const navigate = useNavigate();
+  const { mutateAsync: logout } = useMutation({
+    mutationFn: signOut,
+  });
+
+  async function handleSignOut() {
+    try {
+      await logout();
+      localStorage.removeItem("authorizationToken");
+      localStorage.removeItem("userId");
+
+      navigate("/auth/sign-in");
+    } catch (error) {
+      toast.error("Falha na validação");
+    }
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <User className="w-10 h-10 dark:text-white hover:bg-muted border rounded-full p-2" />
+        <UserIcon className="w-10 h-10 text-white dark:text-white hover:bg-primary border rounded-full p-2" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">
-          <span>Lucas Freire</span>
+          <span>{user?.name}</span>
           <span className="text-xs font-normal text-muted-foreground">
-            lucasfreirel.dev@gmail.com
+            {user?.email}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-muted w-full h-0.5" />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/profile")}>
           <Building className="mr-2 h-4 w-4" />
           <span> Perfil da loja </span>
         </DropdownMenuItem>
 
-        <DropdownMenuItem className="text-rose-500 dark:text-rose-400">
+        <DropdownMenuItem
+          className="text-rose-500 dark:text-rose-400"
+          onClick={handleSignOut}
+        >
           <LogOut className="mr-2 h-4 w-4" />
           <span> Sair </span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

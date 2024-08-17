@@ -1,6 +1,13 @@
-import { env } from '@/env';
-import axios from 'axios';
+import axios from "axios";
 
 export const api = axios.create({
-  baseURL: env.VITE_API_URL,
+  baseURL: "http://localhost:3001",
 });
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("authorizationToken");
+  if (token) {
+    config.headers.Authorization = `${token}`;
+  }
+  return config;
+})

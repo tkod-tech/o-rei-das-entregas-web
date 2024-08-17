@@ -6,10 +6,19 @@ export interface SignInBody {
 }
 
 export async function signIn({ email, password }: SignInBody) {
-  const response = await api.post("/auth/v1/user/sign_in", { email, password });
-  console.log('aaaa');
-  console.log(response.config.headers);
-  console.log(response.status);
-  console.log(response.config);
-  console.log('aaaa');
+  try {
+    const response = await api.post("/auth/v1/user/sign_in", {
+      email,
+      password,
+    });
+    console.log(response);
+    const authorizationHeader = response.headers["authorization"];
+
+    localStorage.setItem("userId", response.data.data.id);
+    localStorage.setItem("authorizationToken", authorizationHeader);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 }

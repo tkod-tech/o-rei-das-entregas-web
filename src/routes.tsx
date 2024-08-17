@@ -7,8 +7,9 @@ import { AppLayout } from "./pages/_layouts/app";
 import { AuthLayout } from "./pages/_layouts/auth";
 import { Access } from "./pages/auth/access";
 import { Home } from "./pages/app/home";
-import { Vacanaices } from "./pages/app/vacanaices";
+import { Vacanaices } from "./pages/app/vacancies";
 import { Delivery } from "./pages/app/delivery";
+import { Profile } from "./pages/app/profile";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,8 @@ export const router = createBrowserRouter([
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/vacanaices", element: <Vacanaices /> },
       { path: "/delivery", element: <Delivery /> },
+
+      { path: "/profile", element: <Profile /> },
     ],
   },
 
@@ -29,7 +32,7 @@ export const router = createBrowserRouter([
       { path: "/auth/sign-in", element: <Signin /> },
       { path: "/auth/sign-up", element: <Signup /> },
       { path: "/auth/store-register", element: <StoreRegister /> },
-      { path: "/auth/access", element: <Access /> }
+      { path: "/auth/access", element: <Access /> },
     ],
   },
 ]);

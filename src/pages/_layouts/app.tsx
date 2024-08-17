@@ -1,28 +1,40 @@
-import { Header } from '@/components/header'
-import { MenuSidebar } from '@/components/menu-sidebar'
-import { Outlet } from 'react-router-dom'
+import { Header } from "@/components/header";
+import { MenuSidebar } from "@/components/menu-sidebar";
+import { Button } from "@/components/ui/button";
+import { api } from "@/services/api";
+import { isAxiosError } from "axios";
+import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export function AppLayout() {
-  return (
-    // <div className=" flex min-h-screen flex-col antialiased">
-    //   <Header />
-    //   <MenuSidebar />
-    //   <div className="flex flex-1 flex-col gap-4 p-8 pt-6">
-    //     <Outlet />
-    //   </div>
-    // </div>
+  const navigate = useNavigate();
+  const token = localStorage.getItem("authorizationToken");
 
-    <div className="flex h-screen">
-      {/*MenuSidebar */}
+  
+
+  useEffect(() => {
+    const interceptorId = api.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (isAxiosError(error)) {
+          if (error.response?.status === 401 || !token ) {
+            navigate("/auth/sign-in");
+          }
+        }
+      }
+    );
+
+    return () => api.interceptors.response.eject(interceptorId);
+  }, [navigate]);
+
+  return (
+    <div className="flex h-screen bg-gray-200">
       <MenuSidebar />
 
-      {/* Conteúdo principal */}
       <div className="flex-grow flex flex-col">
         <Header />
         <Outlet />
       </div>
     </div>
-
-  )
+  );
 }
-

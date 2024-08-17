@@ -6,13 +6,37 @@ import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import ProgressIndicator from "@/components/ProgressIndicator";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
-export function Access() {
+interface StepProps {
+  data: FormData;
+  onNext: (data: Partial<FormData>) => void;
+}
+
+import { FormData } from "@/SignupState";
+
+export function Access({onNext, data}:StepProps ) {
   const [formValid, setFormValid] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [passwordMatch, setPasswordMatch] = useState(true)
+
+  const { register, handleSubmit, formState: { isSubmitting }, watch } = useForm({
+    defaultValues: data,
+  });
+
+  const watchAllFields = watch();
+
+  useEffect(() => {
+    const { password, passwordConfirm } = watchAllFields;
+    setFormValid(!!(password && passwordConfirm && password === passwordConfirm));
+  }, [watchAllFields]);
+
+  const onSubmit = (formData: Partial<FormData>) => {
+    onNext(formData);
+  };
+
 
   useEffect(() => {
     setFormValid( email.trim() !== '' && password.trim() !== '' && passwordConfirm.trim() !== '')
@@ -28,11 +52,11 @@ export function Access() {
     navigate('/auth/store-register');
   };
 
-  const handleContinueLogin = () => {
-    if(passwordMatch) {
-      navigate('/auth/sign-in');
-    }
-  };
+  // const handleContinueLogin = () => {
+  //   if(passwordMatch) {
+  //     navigate('/auth/sign-in');
+  //   }
+  // };
 
   return (
     <>
@@ -52,12 +76,13 @@ export function Access() {
             <ProgressIndicator currentStep={2}/>
           </div>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-2">
               <Label htmlFor="email">E-mail</Label>
               <Input
                 id="email"
                 type="email"
+                {...register("email")}
                 placeholder="example@email.com.br"
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -94,8 +119,8 @@ export function Access() {
               </Button>
               <Button 
                 type="submit"
-                onClick={handleContinueLogin}
-                disabled={!formValid || !passwordMatch}
+                // onClick={handleContinueLogin}
+                disabled={!formValid || !passwordMatch || isSubmitting}
               >
                 Finalizar
               </Button>
