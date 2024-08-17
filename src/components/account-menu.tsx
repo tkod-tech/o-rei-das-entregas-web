@@ -35,7 +35,7 @@ export function AccountMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <UserIcon className="w-10 h-10 dark:text-white hover:bg-muted border rounded-full p-2" />
+        <UserIcon className="w-10 h-10 text-white dark:text-white hover:bg-primary border rounded-full p-2" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">

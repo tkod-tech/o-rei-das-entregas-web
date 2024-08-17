@@ -134,11 +134,11 @@ export function Signup({ onNext, data }: StepProps) {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="number">Telefone</Label>
-                <InputMask
+                {/* <InputMask
                   mask="(99) 99999-9999"
                   value={number}
                   onChange={(e) => setNumber(e.target.value)}
-                >
+                > */}
                   <Input
                     id="telephone"
                     {...register("phone")}
@@ -146,7 +146,7 @@ export function Signup({ onNext, data }: StepProps) {
                     placeholder="Ex: (55) 99191-9292"
                     required
                   />
-                </InputMask>
+                {/* </InputMask> */}
               </div>
               <Button
                 className="w-full"

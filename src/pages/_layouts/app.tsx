@@ -28,7 +28,7 @@ export function AppLayout() {
   }, [navigate]);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-200">
       <MenuSidebar />
 
       <div className="flex-grow flex flex-col">

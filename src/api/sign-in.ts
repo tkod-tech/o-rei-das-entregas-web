@@ -11,6 +11,7 @@ export async function signIn({ email, password }: SignInBody) {
       email,
       password,
     });
+    console.log(response);
     const authorizationHeader = response.headers["authorization"];
 
     localStorage.setItem("userId", response.data.data.id);
