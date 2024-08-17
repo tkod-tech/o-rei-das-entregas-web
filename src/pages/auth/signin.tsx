@@ -60,6 +60,7 @@ export function Signin() {
             <div className="space-y-2">
               <Label htmlFor="email">E-mail</Label>
               <Input
+                className="dark:bg-gray-800"
                 id="email"
                 {...register("email")}
                 type="email"
@@ -69,6 +70,7 @@ export function Signin() {
             <div className="space-y-2">
               <Label htmlFor="password">Sua senha</Label>
               <Input
+                className="dark:bg-gray-800"
                 id="password"
                 {...register("password")}
                 type="password"
