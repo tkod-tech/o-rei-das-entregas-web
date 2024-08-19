@@ -21,10 +21,10 @@ export function Header() {
       <div className="flex items-center gap-6">
         <ModeToggle />
         <Link to="/notifications" className="inline-block mr-4">
-          <Bell className="w-10 h-10  text-white  dark:text-white hover:bg-primary border rounded-full p-2" />
+          <Bell className="w-10 h-10  text-white  dark:text-white bg-primary border rounded-full p-2" />
         </Link>
         <Link to="/settings" className="inline-block mr-4">
-          <Settings className="w-10 h-10 text-white dark:text-white hover:bg-primary border rounded-full p-2" />
+          <Settings className="w-10 h-10 text-white dark:text-white bg-primary border rounded-full p-2" />
         </Link>
 
         <div className="flex items-center gap-4">
