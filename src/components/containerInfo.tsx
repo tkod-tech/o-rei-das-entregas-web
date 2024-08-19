@@ -1,4 +1,4 @@
-import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Alert } from "@/components/ui/alert";
 import { CardContainer } from "./cardContainer";
 
 export function ContainerInfo() {

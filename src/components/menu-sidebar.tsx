@@ -1,4 +1,4 @@
-import { LogOut, HomeIcon, LucideWorkflow, LucideUser } from "lucide-react";
+import { HomeIcon, LucideWorkflow, LucideUser } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 export function MenuSidebar() {
   const location = useLocation();
