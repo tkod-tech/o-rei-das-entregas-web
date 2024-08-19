@@ -7,7 +7,7 @@ import { AccountMenu } from "./account-menu";
 import { useUser } from "@/context/UserContext";
 
 export function Header() {
-  const { user, loading } = useUser();
+  const { user } = useUser();
 
   return (
     <header className="h-36 bg-red-700 dark:bg-secondary flex items-center justify-between px-4 py-2 border-b">

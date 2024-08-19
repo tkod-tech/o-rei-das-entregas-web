@@ -1,6 +1,5 @@
 import { Header } from "@/components/header";
 import { MenuSidebar } from "@/components/menu-sidebar";
-import { Button } from "@/components/ui/button";
 import { api } from "@/services/api";
 import { isAxiosError } from "axios";
 import { useEffect } from "react";

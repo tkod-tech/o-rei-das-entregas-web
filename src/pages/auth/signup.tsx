@@ -8,7 +8,6 @@ import { Terms } from "@/components/terms";
 
 import { Label } from "@radix-ui/react-label";
 import { Helmet } from "react-helmet-async";
-import InputMask from "react-input-mask";
 
 import { useForm } from "react-hook-form";
 
@@ -28,7 +27,7 @@ interface StepProps {
 export function Signup({ onNext, data }: StepProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
+  const [number] = useState("");
   const [checkboxChecked, setCheckboxChecked] = useState(false);
   const [formValid, setFormValid] = useState(false);
 
