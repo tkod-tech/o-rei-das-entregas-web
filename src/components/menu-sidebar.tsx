@@ -22,7 +22,7 @@ export function MenuSidebar() {
               Início
             </div>
           </Link>
-          <Link className={getLinkClass("/vacanaices")} to="/vacanaices">
+          <Link className={getLinkClass("/jobs")} to="/jobs">
             <div className="flex items-center">
               <LucideWorkflow className="mr-2 h-4 w-4" />
               Vagas
