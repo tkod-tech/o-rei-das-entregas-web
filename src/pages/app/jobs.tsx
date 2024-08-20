@@ -1,19 +1,18 @@
-import { Button } from "@/components/ui/button";
+import { OrderTableRow } from "@/components/order-table-row";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ArrowRight, Search, X } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 export function Jobs() {
   return (
-    <div className="bg-grey-300 dark:bg-secondary p-6 flex-grow overflow-auto">
+    <div className="bg-grey-300 dark:bg-gray-900 p-6 flex-grow overflow-auto">
       <Helmet title="Vagas" />
       <h1 className="text-3xl font-bold tracking-tight dark:text-white mb-2">
         Vagas
@@ -21,11 +20,20 @@ export function Jobs() {
       <div className="space-y-2.5 ">
         <form className="flex items-center gap-2">
           <span className="text-sm font-semibold ">Filtros</span>
+          <Input placeholder="Id da vaga" className="h-8 w-[320px]" />
           <Input placeholder="Nome do motoqueiro" className="h-8 w-[320px]" />
+          <Select defaultValue="all">
+            <SelectTrigger className="h-8 w-[180px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem  value="all">Todos os status</SelectItem>
+            </SelectContent>
+          </Select>
         </form>
 
         <div className="border rounded-md">
-          <Table>
+          <Table className="bg-gray-300 dark:bg-gray-900">
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[64px]"></TableHead>
@@ -39,45 +47,8 @@ export function Jobs() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {Array.from({ length: 5 }).map((_, i) => {
-                return (
-                  <TableRow key={i}>
-                    <TableCell>
-                      <Button variant="outline" size="sm">
-                        <Search className="h-3 w-3" />
-                        <span className="sr-only">Detalhes</span>
-                      </Button>
-                    </TableCell>
-                    <TableCell className="font-mono text-xs font-medium">
-                      098
-                    </TableCell>
-                    <TableCell className="text-muted-foreground">
-                      <div className="flex items-center gap-2">
-                        <span className="h-2 w-2 rounded-full bg-yellow-400"></span>
-                        <span className="text-muted-foreground font-medium">
-                          Em aberto
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      Joao Francisco
-                    </TableCell>
-                    <TableCell>22/08/2024 | 11:00 - 14:00</TableCell>
-                    <TableCell>5 Estrelas</TableCell>
-                    <TableCell>
-                      <Button variant="outline" size="sm">
-                        <ArrowRight className="h-3 w-3 mr-2" />
-                        Aprovar
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <Button variant="ghost" size="sm">
-                        <X className="h-3 w-3 mr-2" />
-                        Cancelar
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
+              {Array.from({ length: 8 }).map((_, i) => {
+                return <OrderTableRow key={i} />;
               })}
             </TableBody>
           </Table>

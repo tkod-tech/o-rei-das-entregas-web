@@ -6,10 +6,10 @@ export function MenuSidebar() {
   const getLinkClass = (path: string) => {
     return location.pathname === path
       ? "flex items-center pl-2 bg-red-500 h-12 text-white border-l-4 border-red-900"
-      : "text-white flex items-center pl-2 h-12  dark:hover:bg-muted/50";
+      : "text-white flex items-center pl-2 h-12 dark:hover:bg-muted/50";
   };
   return (
-    <div className="w-1/6 bg-primary dark:bg-secondary shadow-lg z-50 flex flex-col">
+    <div className="w-1/6 bg-primary dark:bg-gray-900 shadow-lg z-50 flex flex-col">
       <div className="flex justify-center p-6">
         <img className="w-20 h-20" src="/img/logomarca.svg" alt="Logomarca" />
       </div>
