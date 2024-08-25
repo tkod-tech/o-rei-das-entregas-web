@@ -68,7 +68,7 @@ export function Jobs() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Todos os status</SelectItem>
-              <SelectItem value="opened">Aberta</SelectItem>
+              <SelectItem value="opened">Aberto</SelectItem>
               <SelectItem value="in_progress">Em andamento</SelectItem>
               <SelectItem value="finished">Finalizado</SelectItem>
               <SelectItem value="canceled">Cancelada</SelectItem>
