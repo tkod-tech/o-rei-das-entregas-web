@@ -38,18 +38,15 @@ export function Jobs() {
   if (isLoading)
     return (
       <div className="flex justify-center items-center h-screen">
-        {/* <div className="w-20 h-42">
-          <CircularProgressbar
-            className=""
-            value={100}
-            styles={{ path: { stroke: "#B91C1B", color: "#B91C1B" } }}
-            text="..."
-          />
-        </div> */}
         Carregando...
       </div>
     );
-  if (error) return <div className="flex justify-center items-center h-screen">Carregando...</div>;
+  if (error)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Carregando...
+      </div>
+    );
 
   return (
     <div className="bg-grey-100 dark:bg-gray-900 px-8 py-2 flex-grow overflow-auto">
