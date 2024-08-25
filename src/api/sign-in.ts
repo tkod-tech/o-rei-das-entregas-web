@@ -11,11 +11,13 @@ export async function signIn({ email, password }: SignInBody) {
       email,
       password,
     });
-    console.log(response);
+
     const authorizationHeader = response.headers["authorization"];
+    console.log(authorizationHeader);
 
     localStorage.setItem("userId", response.data.data.id);
     localStorage.setItem("authorizationToken", authorizationHeader);
+
 
     return response.data;
   } catch (error) {

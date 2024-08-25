@@ -8,6 +8,7 @@ import ProgressIndicator from "@/components/ProgressIndicator";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
+
 interface StepProps {
   data: FormData;
   onNext: (data: Partial<FormData>) => void;

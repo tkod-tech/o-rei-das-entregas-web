@@ -10,7 +10,7 @@ export function Header() {
   const { user } = useUser();
 
   return (
-    <header className="h-36 bg-red-700 dark:bg-secondary flex items-center justify-between px-4 py-2 border-b">
+    <header className="h-24 bg-red-700 dark:bg-gray-900 flex items-center justify-between px-4 py-2 border-b">
       <div className="flex items-center">
         <Link to="/" className="text-xl font-bold text-accent-foreground">
           {user?.storeName}
